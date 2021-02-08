@@ -1,0 +1,10 @@
+{
+  "words": [
+    {
+      "id": 0,
+      "wordsList": ["kids", "You", "this", "must", "event", "your", "and", "visit"],
+      "positions": [3, 0, 6, 4, 7, 2, 1, 5],
+      "translate": ["дети", "Вы", "это", "должны", "событие", "ваши", "и", "посетить"]
+    }
+  ]
+}

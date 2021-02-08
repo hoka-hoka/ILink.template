@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import WordsContext from './WordsContext';
 
 const words = [
@@ -52,8 +52,17 @@ const words = [
   },
 ];
 
-const WordsProvider = ({ children }: { children: JSX.Element }) => (
-  <WordsContext.Provider value={words}>{children}</WordsContext.Provider>
-);
+const WordsProvider = ({ children }: { children: JSX.Element }) => {
+  useEffect(() => {
+    fetch('http://localhost:3000/words')
+      .then((resp) => resp.json())
+      .then(
+        (result) => console.log(result),
+        (error) => error,
+      );
+  }, []);
+
+  return <WordsContext.Provider value={words}>{children}</WordsContext.Provider>;
+};
 
 export default WordsProvider;
