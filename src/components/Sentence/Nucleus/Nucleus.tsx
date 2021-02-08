@@ -1,22 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import WordsContext from '../WordsProvider/WordsContext';
 import NucleusProps from './Nucleus.types';
-
-const Cell = ({ dataKey, children }: { dataKey: number | string; children?: JSX.Element }) => (
-  <li className="sentence__item" data-key={dataKey}>
-    {children}
-  </li>
-);
-
-Cell.defaultProps = {
-  children: <></>,
-};
-
-const Word = ({ dataId, word }: { dataId: number; word: string }) => (
-  <div className="sentence__word" data-id={dataId}>
-    {word}
-  </div>
-);
+import Cell from '../Cell/Cell';
+import Word from '../Word/Word';
 
 const Nucleus = (props: NucleusProps) => {
   const [cells, setCells] = useState<JSX.Element[]>([]);
@@ -24,7 +10,7 @@ const Nucleus = (props: NucleusProps) => {
   let nucleus: JSX.Element[] = [];
   wordsMap.forEach((item) => {
     nucleus.push(
-      <Cell key={item.id} dataKey={item.id}>
+      <Cell key={item.id} dataKey={item.id} classPrefix="item">
         <Word word={item.word} dataId={item.id} />
       </Cell>,
     );
@@ -51,7 +37,7 @@ const Nucleus = (props: NucleusProps) => {
     const targetId = Number(target.dataset.id);
     const targetText = target.innerText;
     const targetWrapper = (
-      <Cell key={targetId} dataKey={targetId}>
+      <Cell key={targetId} dataKey={targetId} classPrefix="item">
         <Word word={targetText} dataId={targetId} />
       </Cell>
     );
@@ -110,7 +96,7 @@ const Nucleus = (props: NucleusProps) => {
     const lastKey = Number(nucleus[nucleus.length - 1].key);
     const nextKey = lastKey + 1;
     nucleus.splice(index, 1);
-    nucleus.push(<Cell key={nextKey} dataKey={nextKey} />);
+    nucleus.push(<Cell key={nextKey} dataKey={nextKey} classPrefix="item" />);
     setCells(() => ([] as JSX.Element[]).concat(nucleus));
   }
 

@@ -1,28 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import WordsContext from '../WordsProvider/WordsContext';
 import FieldProps from './Field.types';
-
-const Cell = ({ dataKey, children }: { dataKey: number | string; children?: JSX.Element }) => (
-  <li className="sentence__cell" data-key={dataKey}>
-    {children}
-  </li>
-);
-
-Cell.defaultProps = {
-  children: <></>,
-};
-
-const Word = ({ dataId, word }: { dataId: number; word: string }) => (
-  <div className="sentence__word" data-id={dataId}>
-    {word}
-  </div>
-);
+import Cell from '../Cell/Cell';
+import Word from '../Word/Word';
 
 const Field = (props: FieldProps) => {
   const wordsMap = useContext(WordsContext);
   const wordsListJSX: JSX.Element[] = [];
   wordsMap.forEach((item) => {
-    wordsListJSX.push(<Cell key={item.id} dataKey={item.id} />);
+    wordsListJSX.push(<Cell key={item.id} dataKey={item.id} classPrefix="cell" />);
   });
   const [wordsList, setWordsList] = useState<JSX.Element[]>([...wordsListJSX]);
 
@@ -35,7 +21,7 @@ const Field = (props: FieldProps) => {
     const [...list] = wordsList;
 
     const placeKey = Number(target.parentElement?.dataset.key);
-    list.splice(placeKey, 1, <Cell key={placeKey} dataKey={placeKey} />);
+    list.splice(placeKey, 1, <Cell key={placeKey} dataKey={placeKey} classPrefix="cell" />);
     setWordsList(list);
 
     newWordMap.splice(placeKey, 1, null);
@@ -61,7 +47,7 @@ const Field = (props: FieldProps) => {
       right: none`;
       const placeKey = Number(props.fixWord.placeUnder?.dataset.key);
       const targetWrapper = (
-        <Cell key={placeKey} dataKey={placeKey}>
+        <Cell key={placeKey} dataKey={placeKey} classPrefix="cell">
           <Word word={targetText} dataId={targetId} />
         </Cell>
       );
